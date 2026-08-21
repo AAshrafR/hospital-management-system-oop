@@ -23,8 +23,3 @@ class Person:
         print(f"Name: {self.name}")
         print(f"Age: {self.age}")
 
-# Create the object and pass the data directly in one step
-person1 = Person("Alex", 25)
-
-# View person information
-person1.view_info()
