@@ -30,6 +30,20 @@ class Staff(Person):
         super().__init__(name, age)
         self.position = position
 
+    def to_dict(self) -> dict:
+        '''
+        Convert the staff object into a dictionary.
+
+        Returns:
+            dict: A dictionary containing the staff member's name,
+                age, and position.
+        '''
+        return {
+            "name": self.name,
+            "age": self.age,
+            "position": self.position
+        }
+    
     def view_info(self) -> str:
         '''
         Return information about the staff member.

@@ -75,6 +75,20 @@ class Patient(Person):
 
         self.department = department
 
+    def to_dict(self) -> dict:
+        '''
+        Convert the patient object into a dictionary.
+
+        Returns:
+            dict: A dictionary containing the patient's name, age,
+                and medical record.
+        '''
+        return {
+            "name": self.name,
+            "age": self.age,
+            "medical_record": self.medical_record
+        }
+
     def view_info(self) -> str:
         """
         Displays comprehensive information about the patient.

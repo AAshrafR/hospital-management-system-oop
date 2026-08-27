@@ -40,6 +40,22 @@ class Department:
             department.add_patient(patient)
         '''
         self.patients.append(patient)
+        
+    def to_dict(self) -> dict:
+        '''
+        Convert the department object into a dictionary.
+
+        Returns:
+            dict: A dictionary containing the department's name,
+                patients, and staff. Each patient and staff member
+                is converted into a dictionary using their to_dict()
+                method.
+        '''
+        return {
+            'name': self.name,
+            'patients': [patient.to_dict() for patient in self.patients],
+            'staff': [staff.to_dict() for staff in self.staff]
+        }
 
     def add_staff(self, staff_member: Staff) -> None:
 

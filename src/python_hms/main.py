@@ -5,56 +5,134 @@ from staff import Staff
 
 
 def main() -> None:
-    '''
-    Run a simple test of the Hospital Management System.
 
-    Creates a hospital, departments, patients, and staff members,
-    then connects them according to the system relationships.
+    '''
+    Run the Hospital Management System.
+
+    Allows the user to create hospital data, add departments,
+    patients, and staff members, and save or load the data
+    using a JSON file.
 
     Returns:
         None
     '''
 
-    # Create a hospital
-    hospital = Hospital("Cairo Hospital", "Cairo")
+    hospital = Hospital(
+        input('Enter hospital name: '),
+        input('Enter hospital location: ')
+    )
 
-    # Create departments
-    cardiology = Department("Cardiology")
-    emergency = Department("Emergency")
+    while True:
 
-    # Create patients
-    patient1 = Patient("Mario", 30, "Heart disease")
-    patient2 = Patient("Mark", 45, "Chest pain")
+        print('\nHospital Management System')
+        print('1. Add Department')
+        print('2. Add Patient')
+        print('3. Add Staff')
+        print('4. Save Data')
+        print('5. Load Data')
+        print('6. Exit')
 
-    # Create staff members
-    staff1 = Staff("Abdelmasih", 35, "Doctor")
-    staff2 = Staff("Sarah", 29, "Nurse")
+        choice = input('Enter your choice: ')
 
-    # Add departments to the hospital
-    hospital.add_department(cardiology)
-    hospital.add_department(emergency)
+        if choice == '1':
 
-    # Add patients to departments
-    cardiology.add_patient(patient1)
-    emergency.add_patient(patient2)
+            department_name = input(
+                'Enter department name: '
+            )
 
-    # Add staff to departments
-    cardiology.add_staff(staff1)
-    emergency.add_staff(staff2)
+            department = Department(department_name)
+            hospital.add_department(department)
 
-    # Display information
-    print(f"Hospital: {hospital.name}")
-    print(f"Location: {hospital.location}")
-    print(f"Departments: {len(hospital.departments)}")
+        elif choice == '2':
 
-    print("\n________Staff Information ")
-    print(staff1.view_info())
-    print(staff2.view_info())
+            if not hospital.departments:
+                print('Please add a department first.')
+                continue
 
-    print("\n________Patient Records ")
-    print(patient1.view_record())
-    print(patient2.view_record())
+            name = input('Enter patient name: ')
+            age = int(input('Enter patient age: '))
+            medical_record = input(
+                'Enter medical record: '
+            )
+
+            print('\nAvailable Departments:')
+
+            for index, department in enumerate(
+                hospital.departments,
+                start=1
+            ):
+                print(f'{index}. {department.name}')
+
+            department_index = int(
+                input('Choose department: ')
+            )
+
+            department = hospital.departments[
+                department_index - 1
+            ]
+
+            patient = Patient(
+                name,
+                age,
+                medical_record
+            )
+
+            department.add_patient(patient)
+
+        elif choice == '3':
+
+            if not hospital.departments:
+                print('Please add a department first.')
+                continue
+
+            name = input('Enter staff name: ')
+            age = int(input('Enter staff age: '))
+            position = input('Enter staff position: ')
+
+            print('\nAvailable Departments:')
+
+            for index, department in enumerate(
+                hospital.departments,
+                start=1
+            ):
+                print(f'{index}. {department.name}')
+
+            department_index = int(
+                input('Choose department: ')
+            )
+
+            department = hospital.departments[
+                department_index - 1
+            ]
+
+            staff = Staff(
+                name,
+                age,
+                position
+            )
+
+            department.add_staff(staff)
+
+        elif choice == '4':
+
+            hospital.save_to_json()
+
+        elif choice == '5':
+
+            loaded_hospital = Hospital.load_from_json()
+
+            if loaded_hospital is not None:
+                hospital = loaded_hospital
+                hospital.display_info()
+
+        elif choice == '6':
+
+            break
+
+        else:
+
+            print('Invalid choice. Please try again.')
 
 
-if __name__ == "__main__":
+if __name__ == '__main__':
     main()

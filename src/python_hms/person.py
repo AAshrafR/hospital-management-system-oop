@@ -18,8 +18,6 @@ class Person:
         self.name = name
         self.age = age
 
-    def view_info(self):
-        """Displays the person's name and age formatted in the console."""
-        print(f"Name: {self.name}")
-        print(f"Age: {self.age}")
-
+    def view_info(self) -> str:
+        '''this function returns the person name and age '''
+        return f"Name: {self.name}, Age: {self.age}"
